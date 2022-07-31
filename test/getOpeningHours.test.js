@@ -18,12 +18,14 @@ describe('Testes da função getOpeningHours', () => {
   const closed = 'The zoo is closed';
   test('Testa se getOpeningHours retorna os valores e erros esperados', () => {
     expect(getOpeningHours('Monday', '09:00-AM')).toEqual(closed);
+    expect(getOpeningHours('Monday', '00:00-PM')).toEqual(closed);
     expect(getOpeningHours('Tuesday', '09:00-AM')).toEqual('The zoo is open');
     expect(getOpeningHours('Tuesday', '09:00-PM')).toEqual(closed);
     expect(getOpeningHours('Tuesday', '12:00-PM')).toEqual('The zoo is open');
     expect(getOpeningHours('Tuesday', '12:00-AM')).toEqual(closed);
-    expect(getOpeningHours('Wednesday', '6:00-AM')).toEqual(closed);
+    expect(getOpeningHours('Wednesday', '09:00-PM')).toEqual(closed);
     expect(() => getOpeningHours('Monday', 'AA:00-AM')).toThrow('The hour should represent a number');
+    expect(() => getOpeningHours('Monday', '09:MM-AM')).toThrow('The minutes should represent a number');
     expect(() => getOpeningHours('Monday', '09:00-MIN')).toThrow('The abbreviation must be \'AM\' or \'PM\'');
     expect(() => getOpeningHours('Monday', '20:00-AM')).toThrow('The hour must be between 0 and 12');
     expect(() => getOpeningHours('Monday', '10:60-AM')).toThrow('The minutes must be between 0 and 59');
